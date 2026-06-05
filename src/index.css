@@ -298,30 +298,33 @@ input:focus, textarea:focus, select:focus {
 }
 
 /* ══════ ИСПРАВЛЕНИЕ ФОРМЫ ══════ */
-/* Принудительно делаем поля кликабельными */
 input, 
 select, 
 textarea, 
 button {
   pointer-events: auto !important;
+}
+
+input, textarea {
   cursor: text;
 }
 
-/* Убираем все возможные перекрытия */
+button, a, [role="button"] {
+  cursor: pointer;
+}
+
 form,
 form * {
   pointer-events: auto !important;
   position: relative;
 }
 
-/* Убираем pointer-events: none у родителей */
 .glass,
 .glass-strong,
 .gradient-border {
   pointer-events: auto !important;
 }
 
-/* Убираем возможные оверлеи */
 * {
   -webkit-tap-highlight-color: transparent;
 }
@@ -337,65 +340,72 @@ select {
   padding-right: 2.5rem;
 }
 
-/* Стили для опций в темной теме */
 .dark select option {
   background-color: #1a1a1a;
   color: #ffffff;
-  padding: 0.5rem;
 }
 
-/* Стили для опций в светлой теме */
 select option {
   background-color: #ffffff;
   color: #111827;
-  padding: 0.5rem;
 }
 
-/* При наведении на опцию */
-select option:hover,
-select option:checked {
-  background-color: #3b82f6 !important;
-  color: #ffffff !important;
-}
-
-/* Убираем стандартную стрелку в IE */
 select::-ms-expand {
   display: none;
 }
 
-/* ══════ ИСПРАВЛЕНИЕ СТРАНИЦ POLITICS И TERMS ══════ */
+/* ══════ ИСПРАВЛЕНИЕ ОТОБРАЖЕНИЯ ТЕКСТА НА ВСЕХ УСТРОЙСТВАХ ═════ */
 
-/* Убираем ограничение ширины для контента */
-.prose {
+/* Отключаем переносы по слогам везде */
+* {
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
+  -ms-hyphens: none !important;
+}
+
+/* Убираем ограничения ширины для текстовых блоков */
+.prose,
+.prose-invert {
   max-width: 100% !important;
 }
 
-/* Исправляем отображение текста */
-.prose p,
-.prose ul,
-.prose ol,
-.prose h2 {
-  word-break: normal;
+/* Базовые стили для текста на страницах Privacy и Terms */
+.space-y-8 p,
+.space-y-8 li,
+.space-y-8 h2 {
+  word-wrap: break-word;
   overflow-wrap: break-word;
-  hyphens: auto;
+  text-align: left;
+  line-height: 1.7;
 }
 
-/* Убираем узкую колонку на мобильных */
-@media (max-width: 1024px) {
-  .prose {
-    width: 100%;
-    max-width: 100%;
+/* На мобильных устройствах */
+@media (max-width: 768px) {
+  .space-y-8 p,
+  .space-y-8 li {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    word-break: break-word;
+  }
+  
+  .space-y-8 h2 {
+    font-size: 1.25rem;
+    line-height: 1.3;
   }
 }
 
-/* Исправляем футер */
-footer p {
-  max-width: 100%;
-  word-break: normal;
+/* Исправление футера */
+footer p,
+footer li,
+footer a {
+  word-wrap: break-word;
   overflow-wrap: break-word;
+  hyphens: none !important;
 }
 
-/* Убираем переносы в футере */
-footer .text-sm {
-  hyphens: none;
+/* Убираем узкие колонки в футере */
+@media (max-width: 1024px) {
+  footer .grid {
+    grid-template-columns: 1fr !important;
+  }
 }

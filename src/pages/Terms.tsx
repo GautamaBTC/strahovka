@@ -58,7 +58,7 @@ export default function Terms() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
-        <div className="flex gap-10">
+        <div className="flex flex-col lg:flex-row gap-10">
           {/* Sidebar TOC - Desktop */}
           <aside className="hidden lg:block w-64 shrink-0">
             <nav className="sticky top-28 space-y-1">
@@ -108,8 +108,8 @@ export default function Terms() {
           </div>
 
           {/* Content */}
-          <div className="flex-1 min-w-0">
-            <div className="prose dark:prose-invert max-w-none w-full space-y-8 text-base leading-relaxed dark:text-gray-300 text-gray-700">
+          <div className="flex-1 min-w-0 w-full">
+            <div className="space-y-8 text-base leading-relaxed dark:text-gray-300 text-gray-700">
 
               <section id="t1">
                 <h2 className="font-heading font-bold text-xl dark:text-white text-gray-900 mb-4 pt-4">1. ОБЩИЕ ПОЛОЖЕНИЯ</h2>
