@@ -12,18 +12,37 @@ interface ModalProps {
 }
 
 function Modal({ isOpen, onClose, title, description, price, features, documents }: ModalProps) {
+  // Блокировка прокрутки при открытой модалке
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60" onClick={onClose}>
+    <div 
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4" 
+      onClick={onClose}
+    >
+      {/* Затемнённый фон с размытием */}
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+      
+      {/* Контент модалки — плотный фон с лёгким размытием */}
       <div 
-        className="relative max-w-2xl w-full glass-strong rounded-3xl p-6 md:p-8 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto bg-white/95 dark:bg-slate-900/95 border border-white/20" 
+        className="relative max-w-2xl w-full rounded-3xl p-6 md:p-8 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto border border-white/10 dark:border-white/10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl" 
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-10 h-10 rounded-full dark:bg-white/10 bg-gray-100 flex items-center justify-center dark:text-gray-400 text-gray-600 hover:text-primary-500 hover:bg-primary-500/10 transition-all"
+          className="absolute top-4 right-4 w-10 h-10 rounded-full dark:bg-white/10 bg-gray-100 flex items-center justify-center dark:text-gray-400 text-gray-600 hover:text-primary-500 hover:bg-primary-500/10 transition-all z-10"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="18" y1="6" x2="6" y2="18"/>
@@ -34,11 +53,11 @@ function Modal({ isOpen, onClose, title, description, price, features, documents
         {/* Content */}
         <div className="pr-2">
           <h3 className="font-heading font-bold text-2xl dark:text-white text-gray-900 mb-3">{title}</h3>
-          <p className="dark:text-gray-400 text-gray-600 mb-6 leading-relaxed">{description}</p>
+          <p className="dark:text-gray-300 text-gray-700 mb-6 leading-relaxed">{description}</p>
 
           {price && (
             <div className="mb-6">
-              <p className="text-sm dark:text-gray-500 text-gray-400 mb-1">Стоимость:</p>
+              <p className="text-sm dark:text-gray-500 text-gray-500 mb-1">Стоимость:</p>
               <p className="text-2xl font-bold text-gradient">{price}</p>
             </div>
           )}
@@ -318,7 +337,7 @@ function useCounter(target: number, duration = 2000) {
   return { count, ref };
 }
 
-/* ─── SVG Icons ─── */
+/* ─── SVG Icons ── */
 const ShieldCheckIcon = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -508,7 +527,7 @@ const teamMembers = [
   },
 ];
 
-/* ─── Working hours ─── */
+/* ─── Working hours ── */
 const workingHours = [
   { day: 'Понедельник', hours: '9:00 — 15:00' },
   { day: 'Вторник', hours: '8:30 — 16:00' },
@@ -808,7 +827,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════ STATS SECTION ═══════ */}
+      {/* ══════ STATS SECTION ═══════ */}
       <section className="relative py-16 md:py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
@@ -870,7 +889,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════ SERVICES SECTION ═══════ */}
+      {/* ═══════ SERVICES SECTION ══════ */}
       <section id="services" className="py-20 md:py-28 dark:bg-surface-900/50 bg-gray-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
@@ -977,6 +996,7 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
+              {/* КНОПКА "ПОДРОБНЕЕ ОБ УСЛУГЕ" — ТЕПЕРЬ ОТКРЫВАЕТ МОДАЛКУ */}
               <button
                 onClick={() => openServiceModal('tech-inspection')}
                 className="w-full sm:w-auto px-10 py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-bold text-lg transition-all hover:scale-105 shadow-xl shadow-primary-500/25"
@@ -1093,7 +1113,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════ CONTACTS SECTION ═══════ */}
+      {/* ══════ CONTACTS SECTION ═══════ */}
       <section id="contacts" className="py-20 md:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
