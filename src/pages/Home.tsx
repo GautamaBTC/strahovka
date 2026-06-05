@@ -15,13 +15,9 @@ function Modal({ isOpen, onClose, title, description, price, features, documents
   if (!isOpen) return null;
 
   return (
-    <div 
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70" 
-      onClick={onClose}
-      style={{ backdropFilter: 'none' }}
-    >
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60" onClick={onClose}>
       <div 
-        className="relative max-w-2xl w-full bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-white/10" 
+        className="relative max-w-2xl w-full glass-strong rounded-3xl p-6 md:p-8 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto bg-white/95 dark:bg-slate-900/95 border border-white/20" 
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
