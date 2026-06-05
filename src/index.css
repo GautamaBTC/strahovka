@@ -362,3 +362,40 @@ select option:checked {
 select::-ms-expand {
   display: none;
 }
+
+/* ══════ ИСПРАВЛЕНИЕ СТРАНИЦ POLITICS И TERMS ══════ */
+
+/* Убираем ограничение ширины для контента */
+.prose {
+  max-width: 100% !important;
+}
+
+/* Исправляем отображение текста */
+.prose p,
+.prose ul,
+.prose ol,
+.prose h2 {
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Убираем узкую колонку на мобильных */
+@media (max-width: 1024px) {
+  .prose {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* Исправляем футер */
+footer p {
+  max-width: 100%;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+/* Убираем переносы в футере */
+footer .text-sm {
+  hyphens: none;
+}

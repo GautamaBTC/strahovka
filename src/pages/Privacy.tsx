@@ -104,7 +104,7 @@ export default function Privacy() {
 
           {/* Content */}
           <div className="flex-1 min-w-0">
-            <div className="prose dark:prose-invert max-w-none space-y-8 text-base leading-relaxed dark:text-gray-300 text-gray-700">
+            <div className="prose dark:prose-invert max-w-none w-full space-y-8 text-base leading-relaxed dark:text-gray-300 text-gray-700">
 
               <section id="s1">
                 <h2 className="font-heading font-bold text-xl dark:text-white text-gray-900 mb-4 pt-4">1. ОБЩИЕ ПОЛОЖЕНИЯ</h2>
