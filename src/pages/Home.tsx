@@ -224,7 +224,7 @@ const teamMembers = [
     role: 'Владелец, эксперт по техосмотру',
     phone: '+7 909 431 11 93',
     phoneLink: '+79094311193',
-    photo: '/images/image.jpg',
+    photo: `${import.meta.env.BASE_URL}images/image.jpg`,
     initials: 'СО',
   },
   {
@@ -232,7 +232,7 @@ const teamMembers = [
     role: 'Оператор техосмотра',
     phone: '+7 960-455-60-22',
     phoneLink: '+79604556022',
-    photo: '/images/image1.jpg',
+    photo: `${import.meta.env.BASE_URL}images/image1.jpg`,
     initials: 'ЛД',
   },
   {
@@ -240,11 +240,10 @@ const teamMembers = [
     role: 'Оператор техосмотра',
     phone: '+7 989-522-45-26',
     phoneLink: '+79895224526',
-    photo: '/images/image2.jpg',
+    photo: `${import.meta.env.BASE_URL}images/image2.jpg`,
     initials: 'ТД',
   },
 ];
-
 /* ─── Working hours ─── */
 const workingHours = [
   { day: 'Понедельник', hours: '9:00 — 15:00' },
