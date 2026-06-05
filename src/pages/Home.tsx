@@ -15,12 +15,19 @@ function Modal({ isOpen, onClose, title, description, price, features, documents
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={onClose}>
-      <div className="relative max-w-2xl w-full glass-strong rounded-3xl p-6 md:p-8 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+    <div 
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70" 
+      onClick={onClose}
+      style={{ backdropFilter: 'none' }}
+    >
+      <div 
+        className="relative max-w-2xl w-full bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-white/10" 
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-10 h-10 rounded-full dark:bg-white/5 bg-gray-100 flex items-center justify-center dark:text-gray-400 text-gray-600 hover:text-primary-500 hover:bg-primary-500/10 transition-all"
+          className="absolute top-4 right-4 w-10 h-10 rounded-full dark:bg-white/10 bg-gray-100 flex items-center justify-center dark:text-gray-400 text-gray-600 hover:text-primary-500 hover:bg-primary-500/10 transition-all"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="18" y1="6" x2="6" y2="18"/>
@@ -29,7 +36,7 @@ function Modal({ isOpen, onClose, title, description, price, features, documents
         </button>
 
         {/* Content */}
-        <div className="pr-8">
+        <div className="pr-2">
           <h3 className="font-heading font-bold text-2xl dark:text-white text-gray-900 mb-3">{title}</h3>
           <p className="dark:text-gray-400 text-gray-600 mb-6 leading-relaxed">{description}</p>
 
