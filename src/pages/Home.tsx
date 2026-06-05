@@ -12,7 +12,6 @@ interface ModalProps {
 }
 
 function Modal({ isOpen, onClose, title, description, price, features, documents }: ModalProps) {
-  // Блокировка прокрутки при открытой модалке
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -31,15 +30,12 @@ function Modal({ isOpen, onClose, title, description, price, features, documents
       className="fixed inset-0 z-[100] flex items-center justify-center p-4" 
       onClick={onClose}
     >
-      {/* Затемнённый фон с размытием */}
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
       
-      {/* Контент модалки — плотный фон с лёгким размытием */}
       <div 
         className="relative max-w-2xl w-full rounded-3xl p-6 md:p-8 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto border border-white/10 dark:border-white/10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl" 
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 w-10 h-10 rounded-full dark:bg-white/10 bg-gray-100 flex items-center justify-center dark:text-gray-400 text-gray-600 hover:text-primary-500 hover:bg-primary-500/10 transition-all z-10"
@@ -50,7 +46,6 @@ function Modal({ isOpen, onClose, title, description, price, features, documents
           </svg>
         </button>
 
-        {/* Content */}
         <div className="pr-2">
           <h3 className="font-heading font-bold text-2xl dark:text-white text-gray-900 mb-3">{title}</h3>
           <p className="dark:text-gray-300 text-gray-700 mb-6 leading-relaxed">{description}</p>
@@ -337,7 +332,7 @@ function useCounter(target: number, duration = 2000) {
   return { count, ref };
 }
 
-/* ─── SVG Icons ── */
+/* ─── SVG Icons ─── */
 const ShieldCheckIcon = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -527,7 +522,7 @@ const teamMembers = [
   },
 ];
 
-/* ─── Working hours ── */
+/* ─── Working hours ─── */
 const workingHours = [
   { day: 'Понедельник', hours: '9:00 — 15:00' },
   { day: 'Вторник', hours: '8:30 — 16:00' },
@@ -634,7 +629,6 @@ function ContactForm() {
     const encodedMessage = encodeURIComponent(message);
     
     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-
     setSubmitted(true);
   };
 
@@ -649,6 +643,7 @@ function ContactForm() {
           Открылось окно WhatsApp с готовым сообщением. Нажмите "Отправить" в WhatsApp, и мы сразу же перезвоним вам!
         </p>
         <button
+          type="button"
           onClick={() => { setSubmitted(false); setForm({ name: '', phone: '', car: '', time: '', comment: '' }); }}
           className="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-medium transition-all"
         >
@@ -795,6 +790,7 @@ export default function Home() {
 
             <div className="reveal reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
               <button
+                type="button"
                 onClick={scrollToForm}
                 className="group px-8 py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-semibold text-lg transition-all hover:scale-105 shadow-xl shadow-primary-500/25 flex items-center gap-2"
               >
@@ -802,6 +798,7 @@ export default function Home() {
                 <ArrowDownIcon />
               </button>
               <button
+                type="button"
                 onClick={scrollToServices}
                 className="px-8 py-4 rounded-2xl font-semibold text-lg transition-all dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 dark:text-white text-gray-900 border dark:border-white/10 border-gray-200"
               >
@@ -827,7 +824,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════ STATS SECTION ═══════ */}
+      {/* ═══════ STATS SECTION ═══════ */}
       <section className="relative py-16 md:py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
@@ -889,7 +886,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════ SERVICES SECTION ══════ */}
+      {/* ═══════ SERVICES SECTION ═══════ */}
       <section id="services" className="py-20 md:py-28 dark:bg-surface-900/50 bg-gray-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
@@ -910,8 +907,9 @@ export default function Home() {
                 }`}
               >
                 {service.featured ? (
-                  <div className="relative glass-strong rounded-2xl p-8 md:p-10 gradient-border overflow-hidden">
-                    <div className="absolute top-4 right-4 px-3 py-1 bg-warn-500/20 text-warn-500 text-xs font-bold rounded-full uppercase tracking-wider">
+                  /* 🔧 ИСПРАВЛЕНО: убран overflow-hidden, добавлен position:relative */
+                  <div className="relative glass-strong rounded-2xl p-8 md:p-10 gradient-border">
+                    <div className="absolute top-4 right-4 px-3 py-1 bg-warn-500/20 text-warn-500 text-xs font-bold rounded-full uppercase tracking-wider z-10">
                       Популярное
                     </div>
                     <div className="flex flex-col md:flex-row items-start gap-6">
@@ -925,9 +923,11 @@ export default function Home() {
                           <span className="px-4 py-2 rounded-xl bg-accent-500/10 text-accent-500 font-bold text-lg">
                             от 1 700 ₽
                           </span>
+                          {/* 🔧 ИСПРАВЛЕНО: type="button", relative z-20, cursor-pointer */}
                           <button
-                            onClick={() => openServiceModal(service.key || '')}
-                            className="px-5 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-medium transition-all hover:scale-105"
+                            type="button"
+                            onClick={() => openServiceModal(service.key)}
+                            className="relative z-20 cursor-pointer px-5 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-medium transition-all hover:scale-105 pointer-events-auto"
                           >
                             Подробнее
                           </button>
@@ -943,9 +943,11 @@ export default function Home() {
                     <h3 className="font-heading font-semibold text-lg dark:text-white text-gray-900 mb-2">{service.name}</h3>
                     <p className="text-sm dark:text-gray-400 text-gray-600 leading-relaxed flex-1">{service.desc}</p>
                     <div className="mt-4 pt-4 border-t dark:border-white/5 border-gray-100">
+                      {/* 🔧 ИСПРАВЛЕНО: type="button", cursor-pointer */}
                       <button
-                        onClick={() => openServiceModal(service.key || '')}
-                        className="text-sm text-primary-500 font-medium hover:text-primary-600 transition-colors"
+                        type="button"
+                        onClick={() => openServiceModal(service.key)}
+                        className="cursor-pointer text-sm text-primary-500 font-medium hover:text-primary-600 transition-colors pointer-events-auto"
                       >
                         Подробнее →
                       </button>
@@ -968,8 +970,9 @@ export default function Home() {
           </div>
 
           <div className="reveal max-w-2xl mx-auto mb-12">
+            {/* 🔧 ИСПРАВЛЕНО: убран overflow-hidden */}
             <div className="relative glass-strong rounded-3xl p-8 md:p-10 gradient-border text-center animate-pulse-glow">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-warn-500 text-white text-xs font-bold rounded-full uppercase tracking-wider">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-warn-500 text-white text-xs font-bold rounded-full uppercase tracking-wider z-10">
                 Специальная цена
               </div>
               <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-primary-500/15 flex items-center justify-center text-primary-500">
@@ -996,10 +999,11 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-              {/* КНОПКА "ПОДРОБНЕЕ ОБ УСЛУГЕ" — ТЕПЕРЬ ОТКРЫВАЕТ МОДАЛКУ */}
+              {/* 🔧 ИСПРАВЛЕНО: type="button", relative z-20, cursor-pointer */}
               <button
+                type="button"
                 onClick={() => openServiceModal('tech-inspection')}
-                className="w-full sm:w-auto px-10 py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-bold text-lg transition-all hover:scale-105 shadow-xl shadow-primary-500/25"
+                className="relative z-20 cursor-pointer w-full sm:w-auto px-10 py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-bold text-lg transition-all hover:scale-105 shadow-xl shadow-primary-500/25 pointer-events-auto"
               >
                 Подробнее об услуге
               </button>
@@ -1113,7 +1117,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════ CONTACTS SECTION ═══════ */}
+      {/* ═══════ CONTACTS SECTION ═══════ */}
       <section id="contacts" className="py-20 md:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
