@@ -55,7 +55,7 @@ function useCounter(target: number, duration = 2000) {
   return { count, ref };
 }
 
-/* ─── SVG Icons ─── */
+/* ─── SVG Icons ── */
 const ShieldCheckIcon = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -244,6 +244,7 @@ const teamMembers = [
     initials: 'ТД',
   },
 ];
+
 /* ─── Working hours ─── */
 const workingHours = [
   { day: 'Понедельник', hours: '9:00 — 15:00' },
@@ -274,9 +275,8 @@ function getPhoneDigits(value: string): string {
 
 /* ─── Team Card Component ─── */
 function TeamCard({ member }: { member: typeof teamMembers[0] }) {
-  const [imgError, setImgError] = useState(true); // Default to true to show placeholder
+  const [imgError, setImgError] = useState(true);
 
-  // Try to load the image
   useEffect(() => {
     const img = new Image();
     img.onload = () => setImgError(false);
@@ -316,7 +316,7 @@ function TeamCard({ member }: { member: typeof teamMembers[0] }) {
   );
 }
 
-/* ─── Contact Form Component ─── */
+/* ─── Contact Form Component (ИСПРАВЛЕННАЯ ВЕРСИЯ) ─── */
 function ContactForm() {
   const [form, setForm] = useState({ name: '', phone: '', car: '', time: '', comment: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -338,9 +338,23 @@ function ContactForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      setSubmitted(true);
-    }
+    if (!validate()) return;
+
+    const timeLabels: Record<string, string> = {
+      morning: 'Утро (8:30 — 11:00)',
+      day: 'День (11:00 — 14:00)',
+      afternoon: 'После обеда (14:00 — 16:00)',
+    };
+
+    const message = `🚗 Новая заявка на техосмотр\n\n👤 Имя: ${form.name}\n📱 Телефон: ${form.phone}\n🚙 Авто: ${form.car || 'Не указано'}\n⏰ Время: ${timeLabels[form.time] || 'Не указано'}\n💬 Комментарий: ${form.comment || 'Нет'}`;
+
+    const whatsappNumber = '79094311193';
+    const encodedMessage = encodeURIComponent(message);
+    
+    // Открываем WhatsApp
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+
+    setSubmitted(true);
   };
 
   if (submitted) {
@@ -349,8 +363,10 @@ function ContactForm() {
         <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-accent-500/10 flex items-center justify-center">
           <CheckCircleIcon />
         </div>
-        <h3 className="font-heading font-bold text-2xl dark:text-white text-gray-900 mb-2">Заявка отправлена!</h3>
-        <p className="dark:text-gray-400 text-gray-600 mb-6">Мы свяжемся с вами в ближайшее время для подтверждения записи.</p>
+        <h3 className="font-heading font-bold text-2xl dark:text-white text-gray-900 mb-2">Заявка сформирована!</h3>
+        <p className="dark:text-gray-400 text-gray-600 mb-6">
+          Открылось окно WhatsApp с готовым сообщением. Нажмите "Отправить" в WhatsApp, и мы сразу же перезвоним вам!
+        </p>
         <button
           onClick={() => { setSubmitted(false); setForm({ name: '', phone: '', car: '', time: '', comment: '' }); }}
           className="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-medium transition-all"
@@ -372,7 +388,7 @@ function ContactForm() {
           value={form.name}
           onChange={(e) => setForm(prev => ({ ...prev, name: e.target.value }))}
           placeholder="Ваше имя"
-          className={`w-full px-4 py-3 rounded-xl dark:bg-white/5 bg-gray-50 border ${errors.name ? 'border-red-400' : 'dark:border-white/10 border-gray-200'} dark:text-white text-gray-900 placeholder-gray-500 transition-all focus:border-primary-500`}
+          className={`w-full px-4 py-3 rounded-xl dark:bg-white/5 bg-gray-50 border ${errors.name ? 'border-red-400' : 'dark:border-white/10 border-gray-200'} dark:text-white text-gray-900 placeholder-gray-500 transition-all focus:border-primary-500 focus:outline-none`}
         />
         {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
       </div>
@@ -386,7 +402,7 @@ function ContactForm() {
           value={form.phone}
           onChange={handlePhoneChange}
           placeholder="+7 (___) ___-__-__"
-          className={`w-full px-4 py-3 rounded-xl dark:bg-white/5 bg-gray-50 border ${errors.phone ? 'border-red-400' : 'dark:border-white/10 border-gray-200'} dark:text-white text-gray-900 placeholder-gray-500 transition-all focus:border-primary-500`}
+          className={`w-full px-4 py-3 rounded-xl dark:bg-white/5 bg-gray-50 border ${errors.phone ? 'border-red-400' : 'dark:border-white/10 border-gray-200'} dark:text-white text-gray-900 placeholder-gray-500 transition-all focus:border-primary-500 focus:outline-none`}
         />
         {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
       </div>
@@ -398,7 +414,7 @@ function ContactForm() {
           value={form.car}
           onChange={(e) => setForm(prev => ({ ...prev, car: e.target.value }))}
           placeholder="Например: Toyota Camry"
-          className="w-full px-4 py-3 rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 dark:text-white text-gray-900 placeholder-gray-500 transition-all focus:border-primary-500"
+          className="w-full px-4 py-3 rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 dark:text-white text-gray-900 placeholder-gray-500 transition-all focus:border-primary-500 focus:outline-none"
         />
       </div>
 
@@ -407,7 +423,7 @@ function ContactForm() {
         <select
           value={form.time}
           onChange={(e) => setForm(prev => ({ ...prev, time: e.target.value }))}
-          className="w-full px-4 py-3 rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 dark:text-white text-gray-900 transition-all focus:border-primary-500"
+          className="w-full px-4 py-3 rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 dark:text-white text-gray-900 transition-all focus:border-primary-500 focus:outline-none appearance-none pr-10"
         >
           <option value="">Выберите время</option>
           <option value="morning">Утро (8:30 — 11:00)</option>
@@ -423,7 +439,7 @@ function ContactForm() {
           onChange={(e) => setForm(prev => ({ ...prev, comment: e.target.value }))}
           placeholder="Дополнительная информация"
           rows={3}
-          className="w-full px-4 py-3 rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 dark:text-white text-gray-900 placeholder-gray-500 transition-all focus:border-primary-500 resize-none"
+          className="w-full px-4 py-3 rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 dark:text-white text-gray-900 placeholder-gray-500 transition-all focus:border-primary-500 focus:outline-none resize-none"
         />
       </div>
 
@@ -460,7 +476,6 @@ export default function Home() {
     <div ref={containerRef}>
       {/* ═══════ HERO SECTION ═══════ */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Aurora Background */}
         <div className="absolute inset-0 dark:bg-surface-950 bg-gradient-to-b dark:from-surface-950 from-blue-50 dark:to-surface-900 to-white" />
         <div className="aurora-blob w-[500px] h-[500px] bg-primary-500/30 dark:bg-primary-500/20 top-[-100px] left-[-100px] animate-aurora-1" />
         <div className="aurora-blob w-[400px] h-[400px] bg-accent-500/20 dark:bg-accent-500/15 top-[200px] right-[-50px] animate-aurora-2" />
@@ -469,25 +484,21 @@ export default function Home() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-40">
           <div className="text-center max-w-4xl mx-auto">
-            {/* Badge */}
             <div className="reveal inline-flex items-center gap-2 px-4 py-2 rounded-full dark:bg-primary-500/10 bg-primary-500/5 border dark:border-primary-500/20 border-primary-500/10 mb-8">
               <ShieldCheckIcon />
               <span className="text-sm font-medium text-primary-500">Официальная аккредитация РСА</span>
             </div>
 
-            {/* H1 */}
             <h1 className="reveal reveal-delay-1 fluid-h1 font-heading font-extrabold dark:text-white text-gray-900 mb-6">
               Техосмотр в Шахтах{' '}
               <span className="text-gradient">за 20 минут</span>{' '}
               официально
             </h1>
 
-            {/* Subtitle */}
             <p className="reveal reveal-delay-2 text-lg md:text-xl dark:text-gray-400 text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
               Пункт техосмотра и страховой центр «АвтоЭксперт» — все услуги для автовладельцев в одном месте. Работаем более 10 лет.
             </p>
 
-            {/* CTA Buttons */}
             <div className="reveal reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
               <button
                 onClick={scrollToForm}
@@ -504,7 +515,6 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Quick Info */}
             <div className="reveal reveal-delay-4 flex flex-wrap items-center justify-center gap-6 text-sm dark:text-gray-400 text-gray-500">
               <a href="tel:+79094311193" className="flex items-center gap-2 hover:text-primary-500 transition-colors">
                 <PhoneLargeIcon /> +7 909 431 11 93
@@ -516,7 +526,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
           <div className="w-6 h-10 rounded-full border-2 dark:border-white/20 border-gray-300 flex items-start justify-center p-1.5">
             <div className="w-1.5 h-3 rounded-full bg-primary-500 animate-bounce" />
@@ -586,7 +595,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════ SERVICES SECTION ═══════ */}
+      {/* ═══════ SERVICES SECTION ══════ */}
       <section id="services" className="py-20 md:py-28 dark:bg-surface-900/50 bg-gray-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
@@ -603,13 +612,10 @@ export default function Home() {
               <div
                 key={i}
                 className={`reveal card-hover rounded-2xl overflow-hidden ${
-                  service.featured
-                    ? 'sm:col-span-2 lg:col-span-3 relative'
-                    : ''
+                  service.featured ? 'sm:col-span-2 lg:col-span-3 relative' : ''
                 }`}
               >
                 {service.featured ? (
-                  /* Featured: Tech Inspection */
                   <div className="relative glass-strong rounded-2xl p-8 md:p-10 gradient-border overflow-hidden">
                     <div className="absolute top-4 right-4 px-3 py-1 bg-warn-500/20 text-warn-500 text-xs font-bold rounded-full uppercase tracking-wider">
                       Популярное
@@ -636,7 +642,6 @@ export default function Home() {
                     </div>
                   </div>
                 ) : (
-                  /* Regular service card */
                   <div className="glass rounded-2xl p-6 h-full flex flex-col">
                     <div className="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-500 mb-4">
                       <service.icon />
@@ -663,7 +668,6 @@ export default function Home() {
             </h2>
           </div>
 
-          {/* Featured Price Card */}
           <div className="reveal max-w-2xl mx-auto mb-12">
             <div className="relative glass-strong rounded-3xl p-8 md:p-10 gradient-border text-center animate-pulse-glow">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-warn-500 text-white text-xs font-bold rounded-full uppercase tracking-wider">
@@ -702,7 +706,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Other services note */}
           <div className="reveal text-center">
             <p className="dark:text-gray-400 text-gray-600 mb-4">
               Стоимость других услуг уточняйте по телефону или в WhatsApp
@@ -820,9 +823,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Contact Info */}
             <div className="space-y-6">
-              {/* Address */}
               <div className="reveal glass rounded-2xl p-6">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-500 shrink-0 mt-0.5">
@@ -843,7 +844,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Phone */}
               <div className="reveal reveal-delay-1 glass rounded-2xl p-6">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-500 shrink-0 mt-0.5">
@@ -866,7 +866,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Email */}
               <div className="reveal reveal-delay-2 glass rounded-2xl p-6">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-accent-500/10 flex items-center justify-center text-accent-500 shrink-0 mt-0.5">
@@ -883,7 +882,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Working Hours */}
               <div className="reveal reveal-delay-3 glass rounded-2xl p-6">
                 <h3 className="font-semibold dark:text-white text-gray-900 mb-4">Режим работы</h3>
                 <div className="space-y-2">
@@ -900,7 +898,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Map */}
             <div className="reveal reveal-delay-2">
               <div className="glass rounded-2xl overflow-hidden h-full min-h-[400px] lg:min-h-full">
                 <iframe
