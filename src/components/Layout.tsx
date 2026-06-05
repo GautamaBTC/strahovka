@@ -37,8 +37,8 @@ export default function Layout({ children, theme, toggleTheme }: LayoutProps) {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* ══════ HEADER ══════ */}
-      <header className="fixed top-0 left-0 right-0 z-40 glass-strong border-b dark:border-white/5 border-gray-200/50">
+      {/* ═════ HEADER ══════ */}
+      <header className="fixed top-0 left-0 right-0 z-40 glass-strong border-b dark:border-white/5 border-gray-200/50 !bg-white/85 dark:!bg-slate-900/85 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
@@ -136,7 +136,7 @@ export default function Layout({ children, theme, toggleTheme }: LayoutProps) {
 
         {/* Mobile Menu */}
         {menuOpen && (
-          <div className="md:hidden glass-strong border-t dark:border-white/5 border-gray-200/50">
+          <div className="md:hidden glass-strong border-t dark:border-white/5 border-gray-200/50 !bg-white/90 dark:!bg-slate-900/90 backdrop-blur-xl">
             <div className="px-4 py-4 space-y-2">
               {navLinks.map((link) => (
                 <Link

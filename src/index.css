@@ -37,7 +37,7 @@
   --font-sans: 'Inter', sans-serif;
 }
 
-/* ══════ BASE STYLES ══════ */
+/* ═════ BASE STYLES ══════ */
 html {
   scroll-behavior: smooth;
 }
@@ -58,15 +58,32 @@ body {
   color: #0f172a;
 }
 
-/* ══════ GLASS EFFECT ══════ */
+/* Блокировка прокрутки при открытой модалке */
+body.modal-open {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+}
+
+/* ══════ GLASS EFFECT — С ФОНОМ ДЛЯ ЧИТАЕМОСТИ ══════ */
 .glass {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.dark .glass {
+  background-color: rgba(15, 23, 42, 0.75);
 }
 
 .glass-strong {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .glass-strong {
+  background-color: rgba(15, 23, 42, 0.85);
 }
 
 /* ══════ GRADIENT BORDER ══════ */
@@ -135,7 +152,7 @@ body {
 
 .animate-float { animation: float 3s ease-in-out infinite; }
 
-/* ══════ PULSE GLOW ══════ */
+/* ═════ PULSE GLOW ══════ */
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
   50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.5); }
@@ -189,7 +206,7 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* ══════ FLUID TYPOGRAPHY ══════ */
+/* ══════ FLUID TYPOGRAPHY ═════ */
 .fluid-h1 {
   font-size: clamp(2rem, 5vw, 4rem);
   line-height: 1.1;
@@ -259,7 +276,7 @@ select::-ms-expand {
   display: none;
 }
 
-/* ══════ FORM FIXES ══════ */
+/* ═════ FORM FIXES ══════ */
 input,
 select,
 textarea,
@@ -269,12 +286,6 @@ button {
 
 form,
 form * {
-  pointer-events: auto !important;
-}
-
-.glass,
-.glass-strong,
-.gradient-border {
   pointer-events: auto !important;
 }
 
