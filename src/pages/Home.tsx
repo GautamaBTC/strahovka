@@ -1,5 +1,265 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
+/* ─── Modal Component ─── */
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+  description: string;
+  price?: string;
+  features?: string[];
+  documents?: string[];
+}
+
+function Modal({ isOpen, onClose, title, description, price, features, documents }: ModalProps) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={onClose}>
+      <div className="relative max-w-2xl w-full glass-strong rounded-3xl p-6 md:p-8 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 w-10 h-10 rounded-full dark:bg-white/5 bg-gray-100 flex items-center justify-center dark:text-gray-400 text-gray-600 hover:text-primary-500 hover:bg-primary-500/10 transition-all"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+
+        {/* Content */}
+        <div className="pr-8">
+          <h3 className="font-heading font-bold text-2xl dark:text-white text-gray-900 mb-3">{title}</h3>
+          <p className="dark:text-gray-400 text-gray-600 mb-6 leading-relaxed">{description}</p>
+
+          {price && (
+            <div className="mb-6">
+              <p className="text-sm dark:text-gray-500 text-gray-400 mb-1">Стоимость:</p>
+              <p className="text-2xl font-bold text-gradient">{price}</p>
+            </div>
+          )}
+
+          {features && features.length > 0 && (
+            <div className="mb-6">
+              <p className="font-semibold dark:text-white text-gray-900 mb-3">Что включает:</p>
+              <ul className="space-y-2">
+                {features.map((feature, i) => (
+                  <li key={i} className="flex items-start gap-2 dark:text-gray-300 text-gray-700">
+                    <span className="text-accent-500 mt-0.5">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    </span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {documents && documents.length > 0 && (
+            <div className="mb-6">
+              <p className="font-semibold dark:text-white text-gray-900 mb-3">Необходимые документы:</p>
+              <ul className="space-y-2">
+                {documents.map((doc, i) => (
+                  <li key={i} className="flex items-start gap-2 dark:text-gray-300 text-gray-700">
+                    <span className="text-primary-500 mt-1 w-1.5 h-1.5 rounded-full bg-primary-500 shrink-0"/>
+                    <span>{doc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <a
+            href="https://wa.me/79094311193"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full mt-4 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-semibold transition-all hover:scale-[1.02] inline-flex items-center justify-center gap-2"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/>
+            </svg>
+            Записаться через WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Service Details for Modals ─── */
+const serviceDetails: Record<string, { description: string; price?: string; features?: string[]; documents?: string[] }> = {
+  'tech-inspection': {
+    description: 'Проводим технический осмотр всех категорий транспортных средств с внесением в единую автоматизированную информационную систему технического осмотра (ЕАИСТО). Выдаем диагностическую карту установленного образца.',
+    price: 'от 1 700 ₽ (по предварительной записи)',
+    features: [
+      'Внешний осмотр транспортного средства',
+      'Проверка работы тормозной системы',
+      'Диагностика рулевого управления',
+      'Проверка световых приборов',
+      'Проверка выхлопной системы',
+      'Внесение данных в ЕАИСТО',
+      'Выдача диагностической карты',
+    ],
+    documents: [
+      'Паспорт собственника',
+      'Свидетельство о регистрации ТС (СТС)',
+      'Доверенность (если владелец другой)',
+    ],
+  },
+  'insurance': {
+    description: 'Оформляем полисы ОСАГО и КАСКО от ведущих страховых компаний России. Помощь в выборе оптимальной программы страхования.',
+    price: 'ОСАГО от 5 000 ₽, КАСКО — индивидуально',
+    features: [
+      'Оформление ОСАГО за 15 минут',
+      'Скидки за безаварийную езду (КБМ)',
+      'Возможность оформления без визита в офис',
+      'Помощь при наступлении страхового случая',
+      'Работаем со всеми крупными страховыми',
+    ],
+    documents: [
+      'Паспорт собственника',
+      'Водительские удостоверения всех водителей',
+      'Свидетельство о регистрации ТС',
+      'Диагностическая карта (для ОСАГО)',
+      'Предыдущий полис (если есть)',
+    ],
+  },
+  'license-replacement': {
+    description: 'Помогаем заменить водительское удостоверение в связи с окончанием срока действия, утратой, изменением персональных данных.',
+    price: 'от 2 000 ₽ (без учета госпошлины)',
+    features: [
+      'Помощь в подготовке документов',
+      'Запись в ГИБДД',
+      'Сопровождение при необходимости',
+      'Срок оформления от 1 дня',
+    ],
+    documents: [
+      'Паспорт',
+      'Старое водительское удостоверение',
+      'Медицинская справка (форма 003-В/у)',
+      'Квитанция об оплате госпошлины',
+    ],
+  },
+  'registration': {
+    description: 'Помощь в постановке автомобилей на учет в ГИБДД. Снятие с учета, внесение изменений в регистрационные данные.',
+    price: 'от 3 000 ₽ (без учета госпошлин)',
+    features: [
+      'Подготовка полного пакета документов',
+      'Запись в ГИБДД на удобное время',
+      'Сопровождение в ГИБДД',
+      'Помощь в получении номеров',
+    ],
+    documents: [
+      'Паспорт собственника',
+      'ПТС (паспорт транспортного средства)',
+      'СТС (старое, если есть)',
+      'Договор купли-продажи',
+      'Полис ОСАГО',
+      'Квитанции об оплате госпошлин',
+    ],
+  },
+  'medical': {
+    description: 'Оформление медицинских справок для водителей всех категорий (форма 003-В/у). Прохождение медкомиссии за 30 минут.',
+    price: 'от 1 500 ₽',
+    features: [
+      'Все врачи в одном месте',
+      'Без очередей',
+      'Справка готова за 30-40 минут',
+      'Действует 12 месяцев',
+      'Официальная лицензия',
+    ],
+    documents: [
+      'Паспорт',
+      'Водительское удостоверение (если есть)',
+      'Старая медсправка (если есть)',
+    ],
+  },
+  'life-insurance': {
+    description: 'Страхование жизни и здоровья, ипотечное страхование. Индивидуальные программы под ваши потребности.',
+    price: 'индивидуальный расчет',
+    features: [
+      'Страхование от несчастных случаев',
+      'Ипотечное страхование',
+      'Накопительное страхование жизни',
+      'Гибкие программы',
+      'Выплаты до 10 млн ₽',
+    ],
+    documents: [
+      'Паспорт',
+      'Медицинская справка (для больших сумм)',
+    ],
+  },
+  'property-insurance': {
+    description: 'Страхование домов, квартир, дач и другого имущества от пожара, затопления, кражи и других рисков.',
+    price: 'от 3 000 ₽ в год',
+    features: [
+      'Страхование от огня и воды',
+      'Защита от кражи со взломом',
+      'Страхование гражданской ответственности',
+      'Выплаты до 10 млн ₽',
+      'Оплата в рассрочку',
+    ],
+    documents: [
+      'Паспорт',
+      'Документы на имущество',
+    ],
+  },
+  'training': {
+    description: 'Обучение вождению на все категории прав (A, B, C, D) и спецтехнику. Теоретические и практические занятия.',
+    price: 'от 25 000 ₽ (категория B)',
+    features: [
+      'Лицензированная автошкола',
+      'Опытные инструкторы',
+      'Современные автомобили',
+      'Гибкий график занятий',
+      'Возможна рассрочка',
+      'Помощь в сдаче экзаменов в ГИБДД',
+    ],
+    documents: [
+      'Паспорт',
+      'ИНН',
+      'Фото 3x4 (2 шт.)',
+      'Медицинская справка',
+    ],
+  },
+  'contracts': {
+    description: 'Составление и оформление договоров купли-продажи автомобилей. Юридическая проверка чистоты сделки.',
+    price: 'от 1 500 ₽',
+    features: [
+      'Проверка автомобиля по базам',
+      'Проверка на ограничения и залоги',
+      'Правильное оформление договора',
+      'Консультация по сделке',
+      'Готовность за 30 минут',
+    ],
+    documents: [
+      'Паспорта обеих сторон',
+      'ПТС автомобиля',
+      'СТС автомобиля',
+    ],
+  },
+  'leasing': {
+    description: 'Оформление автомобилей в лизинг для физических и юридических лиц. Выгодные условия от партнеров.',
+    price: 'индивидуальный расчет',
+    features: [
+      'Первоначальный взнос от 0%',
+      'Срок лизинга до 5 лет',
+      'Минимум документов',
+      'Рассмотрение заявки за 1 день',
+      'Любые автомобили: новые и с пробегом',
+    ],
+    documents: [
+      'Паспорт',
+      'Водительское удостоверение',
+      'Справка о доходах (2-НДФЛ)',
+      'Трудовая книжка (копия)',
+    ],
+  },
+};
+
 /* ─── Hooks ─── */
 function useScrollReveal() {
   const ref = useRef<HTMLDivElement>(null);
@@ -55,7 +315,7 @@ function useCounter(target: number, duration = 2000) {
   return { count, ref };
 }
 
-/* ─── SVG Icons ── */
+/* ─── SVG Icons ─── */
 const ShieldCheckIcon = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -205,16 +465,16 @@ const NavigationIcon = () => (
 
 /* ─── Services data ─── */
 const services = [
-  { name: 'Техосмотр', desc: 'Технический осмотр транспортных средств с внесением в ЕАИСТО', icon: CarFrontIcon, featured: true },
-  { name: 'Каско и ОСАГО', desc: 'Оформление полисов обязательного и добровольного страхования', icon: ShieldCheckIcon },
-  { name: 'Замена ВУ', desc: 'Замена водительского удостоверения, помощь в оформлении', icon: IdCardIcon },
-  { name: 'Постановка на учёт', desc: 'Регистрация автомобилей в ГИБДД, все виды регистрационных действий', icon: ClipboardListIcon },
-  { name: 'Медсправки', desc: 'Медицинские справки на все категории водительских прав', icon: HeartIcon },
-  { name: 'Страхование жизни', desc: 'Страхование жизни и ипотеки, индивидуальные программы', icon: HeartIcon },
-  { name: 'Страхование имущества', desc: 'Страхование домов, квартир и другого имущества', icon: HomeIcon },
-  { name: 'Обучение', desc: 'Обучение на все категории водительских прав и спецтехнику', icon: GraduationCapIcon },
-  { name: 'Договоры купли-продажи', desc: 'Составление и оформление договоров купли-продажи автомобилей', icon: ScaleIcon },
-  { name: 'Лизинг авто', desc: 'Оформление автомобилей в лизинг для физических и юридических лиц', icon: BriefcaseIcon },
+  { name: 'Техосмотр', desc: 'Технический осмотр транспортных средств с внесением в ЕАИСТО', icon: CarFrontIcon, featured: true, key: 'tech-inspection' },
+  { name: 'Каско и ОСАГО', desc: 'Оформление полисов обязательного и добровольного страхования', icon: ShieldCheckIcon, key: 'insurance' },
+  { name: 'Замена ВУ', desc: 'Замена водительского удостоверения, помощь в оформлении', icon: IdCardIcon, key: 'license-replacement' },
+  { name: 'Постановка на учёт', desc: 'Регистрация автомобилей в ГИБДД, все виды регистрационных действий', icon: ClipboardListIcon, key: 'registration' },
+  { name: 'Медсправки', desc: 'Медицинские справки на все категории водительских прав', icon: HeartIcon, key: 'medical' },
+  { name: 'Страхование жизни', desc: 'Страхование жизни и ипотеки, индивидуальные программы', icon: HeartIcon, key: 'life-insurance' },
+  { name: 'Страхование имущества', desc: 'Страхование домов, квартир и другого имущества', icon: HomeIcon, key: 'property-insurance' },
+  { name: 'Обучение', desc: 'Обучение на все категории водительских прав и спецтехнику', icon: GraduationCapIcon, key: 'training' },
+  { name: 'Договоры купли-продажи', desc: 'Составление и оформление договоров купли-продажи автомобилей', icon: ScaleIcon, key: 'contracts' },
+  { name: 'Лизинг авто', desc: 'Оформление автомобилей в лизинг для физических и юридических лиц', icon: BriefcaseIcon, key: 'leasing' },
 ];
 
 /* ─── Team data ─── */
@@ -316,7 +576,7 @@ function TeamCard({ member }: { member: typeof teamMembers[0] }) {
   );
 }
 
-/* ─── Contact Form Component (ИСПРАВЛЕННАЯ ВЕРСИЯ) ─── */
+/* ─── Contact Form Component ─── */
 function ContactForm() {
   const [form, setForm] = useState({ name: '', phone: '', car: '', time: '', comment: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -351,7 +611,6 @@ function ContactForm() {
     const whatsappNumber = '79094311193';
     const encodedMessage = encodeURIComponent(message);
     
-    // Открываем WhatsApp
     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
 
     setSubmitted(true);
@@ -464,6 +723,9 @@ export default function Home() {
   const stat3 = useCounter(20);
   const stat4 = useCounter(100);
 
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const scrollToForm = useCallback(() => {
     document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
   }, []);
@@ -471,6 +733,16 @@ export default function Home() {
   const scrollToServices = useCallback(() => {
     document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
   }, []);
+
+  const openServiceModal = (serviceKey: string) => {
+    setSelectedService(serviceKey);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedService(null), 300);
+  };
 
   return (
     <div ref={containerRef}>
@@ -595,7 +867,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════ SERVICES SECTION ══════ */}
+      {/* ═══════ SERVICES SECTION ═══════ */}
       <section id="services" className="py-20 md:py-28 dark:bg-surface-900/50 bg-gray-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
@@ -632,10 +904,10 @@ export default function Home() {
                             от 1 700 ₽
                           </span>
                           <button
-                            onClick={scrollToForm}
+                            onClick={() => openServiceModal(service.key || '')}
                             className="px-5 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-medium transition-all hover:scale-105"
                           >
-                            Записаться
+                            Подробнее
                           </button>
                         </div>
                       </div>
@@ -649,7 +921,12 @@ export default function Home() {
                     <h3 className="font-heading font-semibold text-lg dark:text-white text-gray-900 mb-2">{service.name}</h3>
                     <p className="text-sm dark:text-gray-400 text-gray-600 leading-relaxed flex-1">{service.desc}</p>
                     <div className="mt-4 pt-4 border-t dark:border-white/5 border-gray-100">
-                      <span className="text-sm text-primary-500 font-medium">Подробнее →</span>
+                      <button
+                        onClick={() => openServiceModal(service.key || '')}
+                        className="text-sm text-primary-500 font-medium hover:text-primary-600 transition-colors"
+                      >
+                        Подробнее →
+                      </button>
                     </div>
                   </div>
                 )}
@@ -698,10 +975,10 @@ export default function Home() {
                 ))}
               </ul>
               <button
-                onClick={scrollToForm}
+                onClick={() => openServiceModal('tech-inspection')}
                 className="w-full sm:w-auto px-10 py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-bold text-lg transition-all hover:scale-105 shadow-xl shadow-primary-500/25"
               >
-                Записаться на техосмотр
+                Подробнее об услуге
               </button>
             </div>
           </div>
@@ -932,6 +1209,19 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Service Modal */}
+      {selectedService && serviceDetails[selectedService] && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          title={services.find(s => s.key === selectedService)?.name || ''}
+          description={serviceDetails[selectedService].description}
+          price={serviceDetails[selectedService].price}
+          features={serviceDetails[selectedService].features}
+          documents={serviceDetails[selectedService].documents}
+        />
+      )}
     </div>
   );
 }
