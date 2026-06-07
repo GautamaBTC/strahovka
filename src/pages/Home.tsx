@@ -763,9 +763,9 @@ export default function Home() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-40">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="reveal inline-flex items-center gap-2 px-4 py-2 rounded-full dark:bg-primary-500/10 bg-primary-500/5 border dark:border-primary-500/20 border-primary-500/10 mb-8">
-              <ShieldCheckIcon />
-              <span className="text-sm font-medium text-primary-500">Официальная аккредитация РСА</span>
+            <div className="reveal inline-flex items-center gap-3 px-5 py-2.5 rounded-full dark:bg-accent-500/10 bg-accent-500/5 border dark:border-accent-400/30 border-accent-500/20 mb-6">
+              <span className="text-accent-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.8)]"><ShieldCheckIcon /></span>
+              <span className="text-base font-semibold text-accent-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.6)]">Официальная аккредитация РСА</span>
             </div>
 
             <h1 className="reveal reveal-delay-1 fluid-h1 font-heading font-extrabold dark:text-white text-gray-900 mb-6">
