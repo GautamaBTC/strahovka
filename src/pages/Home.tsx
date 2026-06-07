@@ -486,7 +486,7 @@ const teamMembers = [
     role: 'Оператор сервисного центра',
     phone: '+7 909 431 11 93',
     phoneLink: '+79094311193',
-    photo: `${import.meta.env.BASE_URL}images/image.jpg`,
+    photo: `${import.meta.env.BASE_URL}imges/image.jpg`,
     initials: 'СО',
   },
   {
@@ -494,7 +494,7 @@ const teamMembers = [
     role: 'Технический эксперт',
     phone: '+7 960-455-60-22',
     phoneLink: '+79604556022',
-    photo: `${import.meta.env.BASE_URL}images/image1.jpg`,
+    photo: `${import.meta.env.BASE_URL}imges/image1.jpg`,
     initials: 'ЛД',
   },
   {
@@ -502,7 +502,7 @@ const teamMembers = [
     role: 'Технический эксперт',
     phone: '+7 989-522-45-26',
     phoneLink: '+79895224526',
-    photo: `${import.meta.env.BASE_URL}images/image2.jpg`,
+    photo: `${import.meta.env.BASE_URL}imges/image2.jpg`,
     initials: 'ТД',
   },
 ];
@@ -750,11 +750,18 @@ export default function Home() {
     <div ref={containerRef}>
       {/* ═══════ HERO SECTION ═══════ */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 dark:bg-surface-950 bg-gradient-to-b dark:from-surface-950 from-blue-50 dark:to-surface-900 to-white" />
-        <div className="aurora-blob w-[500px] h-[500px] bg-primary-500/30 dark:bg-primary-500/20 top-[-100px] left-[-100px] animate-aurora-1" />
-        <div className="aurora-blob w-[400px] h-[400px] bg-accent-500/20 dark:bg-accent-500/15 top-[200px] right-[-50px] animate-aurora-2" />
-        <div className="aurora-blob w-[300px] h-[300px] bg-purple-500/15 dark:bg-purple-500/10 bottom-[100px] left-[30%] animate-aurora-3" />
-        <div className="absolute inset-0 noise-overlay" />
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/imges/background.jpg')" }}
+        />
+        {/* Dark Overlay for readability */}
+        <div className="absolute inset-0 z-0 bg-surface-950/60 dark:bg-surface-950/70" />
+        
+        {/* Subtle Aurora accents on top */}
+        <div className="aurora-blob w-[500px] h-[500px] bg-primary-500/20 top-[-100px] left-[-100px] animate-aurora-1 mix-blend-overlay" />
+        <div className="aurora-blob w-[400px] h-[400px] bg-accent-500/15 top-[200px] right-[-50px] animate-aurora-2 mix-blend-overlay" />
+        <div className="absolute inset-0 noise-overlay opacity-5 pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-40">
           <div className="text-center max-w-4xl mx-auto">
