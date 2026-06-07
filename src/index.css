@@ -110,6 +110,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #030610;
+  min-height: 100dvh;
   min-height: 100vh;
 }
 

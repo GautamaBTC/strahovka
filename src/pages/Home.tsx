@@ -753,7 +753,7 @@ export default function Home() {
   return (
     <div ref={containerRef}>
       {/* ═══════ HERO SECTION ═══════ */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-surface-950">
+      <section className="relative min-h-[100dvh] min-h-screen flex items-center justify-center overflow-hidden bg-surface-950">
         {/* Background Image — fixed, oversized to cover mobile browser chrome */}
         <div 
           className="fixed -inset-x-0 -top-0 bottom-[-120px] z-0 bg-cover bg-center bg-no-repeat will-change-transform"
