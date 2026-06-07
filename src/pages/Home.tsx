@@ -754,13 +754,13 @@ export default function Home() {
     <div ref={containerRef}>
       {/* ═══════ HERO SECTION ═══════ */}
       <section className="relative min-h-[100dvh] min-h-screen flex items-center justify-center overflow-hidden bg-surface-950">
-        {/* Background Image — fixed, oversized to cover mobile browser chrome */}
+        {/* Background Image — fixed, covers full viewport + safe area */}
         <div 
-          className="fixed -inset-x-0 -top-0 bottom-[-120px] z-0 bg-cover bg-center bg-no-repeat will-change-transform"
-          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/background.jpg)` }}
+          className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat will-change-transform"
+          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/background.jpg)`, minHeight: '100dvh' }}
         />
-        {/* Dark Overlay — matches oversized bg */}
-        <div className="fixed -inset-x-0 -top-0 bottom-[-120px] z-0 bg-surface-950/40 pointer-events-none" />
+        {/* Dark Overlay */}
+        <div className="fixed inset-0 z-0 bg-surface-950/40 pointer-events-none" style={{ minHeight: '100dvh' }} />
         
         {/* Subtle Aurora accents on top */}
         <div className="aurora-blob w-[500px] h-[500px] bg-primary-500/20 top-[-100px] left-[-100px] animate-aurora-1 mix-blend-overlay" />
