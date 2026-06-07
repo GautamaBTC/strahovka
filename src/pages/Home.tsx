@@ -486,7 +486,7 @@ const teamMembers = [
     role: 'Оператор сервисного центра',
     phone: '+7 909 431 11 93',
     phoneLink: '+79094311193',
-    photo: `${import.meta.env.BASE_URL}imges/image.jpg`,
+    photo: `${import.meta.env.BASE_URL}images/image.png`,
     initials: 'СО',
   },
   {
@@ -494,7 +494,7 @@ const teamMembers = [
     role: 'Технический эксперт',
     phone: '+7 960-455-60-22',
     phoneLink: '+79604556022',
-    photo: `${import.meta.env.BASE_URL}imges/image1.jpg`,
+    photo: `${import.meta.env.BASE_URL}images/image1.png`,
     initials: 'ЛД',
   },
   {
@@ -502,7 +502,7 @@ const teamMembers = [
     role: 'Технический эксперт',
     phone: '+7 989-522-45-26',
     phoneLink: '+79895224526',
-    photo: `${import.meta.env.BASE_URL}imges/image2.jpg`,
+    photo: `${import.meta.env.BASE_URL}images/image2.png`,
     initials: 'ТД',
   },
 ];
@@ -750,13 +750,13 @@ export default function Home() {
     <div ref={containerRef}>
       {/* ═══════ HERO SECTION ═══════ */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
+        {/* Background Image — fixed, не скроллится */}
         <div 
-          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/imges/background.jpg')" }}
+          className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/images/background.jpg')" }}
         />
-        {/* Dark Overlay for readability */}
-        <div className="absolute inset-0 z-0 bg-surface-950/60 dark:bg-surface-950/70" />
+        {/* Dark Overlay for readability — fixed, бесшовное затемнение на весь сайт */}
+        <div className="fixed inset-0 z-0 bg-surface-950/65 pointer-events-none" />
         
         {/* Subtle Aurora accents on top */}
         <div className="aurora-blob w-[500px] h-[500px] bg-primary-500/20 top-[-100px] left-[-100px] animate-aurora-1 mix-blend-overlay" />

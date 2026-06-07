@@ -3,11 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 
 interface LayoutProps {
   children: React.ReactNode;
-  theme: 'dark' | 'light';
-  toggleTheme: () => void;
 }
 
-export default function Layout({ children, theme, toggleTheme }: LayoutProps) {
+export default function Layout({ children }: LayoutProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -31,9 +29,40 @@ export default function Layout({ children, theme, toggleTheme }: LayoutProps) {
   const navLinks = [
     { to: '/', label: 'Главная' },
     { to: '/#services', label: 'Услуги' },
-    { to: '/#pricing', label: 'Цены' },
+    { to: '/#team', label: 'Команда' },
     { to: '/#contacts', label: 'Контакты' },
+    { to: 'https://yandex.ru/maps/-/CDaZiE~P', label: 'Как проехать', external: true },
   ];
+
+  // HashRouter не скроллит по якорям автоматически — делаем вручную
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, to: string) => {
+    if (to.startsWith('/#')) {
+      e.preventDefault();
+      setMenuOpen(false);
+      const id = to.replace('/#', '');
+      // Если уже на главной — скроллим сразу
+      if (location.pathname === '/') {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        // Переходим на главную, потом скроллим после рендера
+        window.location.hash = '#/' + '?anchor=' + id;
+        window.location.reload();
+      }
+    }
+  };
+
+  // При загрузке проверяем, есть ли якорь в URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const anchor = params.get('anchor');
+    if (anchor && location.pathname === '/') {
+      requestAnimationFrame(() => {
+        const el = document.getElementById(anchor);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+  }, [location]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -43,13 +72,6 @@ export default function Layout({ children, theme, toggleTheme }: LayoutProps) {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-500 group-hover:scale-110 transition-transform">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/>
-                  <circle cx="6.5" cy="16.5" r="2.5"/>
-                  <circle cx="16.5" cy="16.5" r="2.5"/>
-                </svg>
-              </div>
               <div>
                 <div className="font-heading font-bold text-xl dark:text-white text-gray-900 leading-tight">
                   Авто<span className="text-primary-500">Эксперт</span>
@@ -62,47 +84,35 @@ export default function Layout({ children, theme, toggleTheme }: LayoutProps) {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  className="px-4 py-2 rounded-lg text-sm font-medium dark:text-gray-300 text-gray-700 hover:text-primary-500 hover:bg-primary-500/5 transition-all"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) =>
+                link.external ? (
+                  <a
+                    key={link.to}
+                    href={link.to}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-lg text-sm font-medium dark:text-gray-300 text-gray-700 hover:text-primary-500 hover:bg-primary-500/5 transition-all"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <a
+                    key={link.to}
+                    href={link.to.startsWith('/#') ? link.to : undefined}
+                    onClick={(e) => handleAnchorClick(e as any, link.to)}
+                    className="px-4 py-2 rounded-lg text-sm font-medium dark:text-gray-300 text-gray-700 hover:text-primary-500 hover:bg-primary-500/5 transition-all cursor-pointer"
+                  >
+                    {link.label}
+                  </a>
+                )
+              )}
             </nav>
 
             {/* Actions */}
             <div className="flex items-center gap-2">
-              {/* Theme Toggle */}
-              <button
-                onClick={toggleTheme}
-                className="w-10 h-10 rounded-lg flex items-center justify-center dark:text-gray-300 text-gray-700 hover:bg-primary-500/10 hover:text-primary-500 transition-all"
-                aria-label="Toggle theme"
-              >
-                {theme === 'dark' ? (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="5"/>
-                    <line x1="12" y1="1" x2="12" y2="3"/>
-                    <line x1="12" y1="21" x2="12" y2="23"/>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                    <line x1="1" y1="12" x2="3" y2="12"/>
-                    <line x1="21" y1="12" x2="23" y2="12"/>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                  </svg>
-                ) : (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                  </svg>
-                )}
-              </button>
-
               {/* Phone */}
               <a
-                href="tel:+79094311193"
+                href="tel:+790****1193"
                 className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-500/10 text-primary-500 hover:bg-primary-500 hover:text-white transition-all font-medium text-sm"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -110,64 +120,105 @@ export default function Layout({ children, theme, toggleTheme }: LayoutProps) {
                 </svg>
                 +7 909 431 11 93
               </a>
-
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="md:hidden w-10 h-10 rounded-lg flex items-center justify-center dark:text-gray-300 text-gray-700 hover:bg-primary-500/10 hover:text-primary-500 transition-all"
-                aria-label="Toggle menu"
-              >
-                {menuOpen ? (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"/>
-                    <line x1="6" y1="6" x2="18" y2="18"/>
-                  </svg>
-                ) : (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"/>
-                    <line x1="3" y1="6" x2="21" y2="6"/>
-                    <line x1="3" y1="18" x2="21" y2="18"/>
-                  </svg>
-                )}
-              </button>
             </div>
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        {menuOpen && (
-          <div className="md:hidden glass-strong border-t dark:border-white/5 border-gray-200/50 !bg-white/90 dark:!bg-slate-900/90 backdrop-blur-xl">
-            <div className="px-4 py-4 space-y-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  className="block px-4 py-3 rounded-lg text-base font-medium dark:text-gray-300 text-gray-700 hover:text-primary-500 hover:bg-primary-500/5 transition-all"
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <a
-                href="tel:+79094311193"
-                className="flex items-center gap-2 px-4 py-3 rounded-lg bg-primary-500/10 text-primary-500 font-medium"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-                </svg>
-                +7 909 431 11 93
-              </a>
-            </div>
-          </div>
-        )}
       </header>
 
+      {/* ═══ Mobile Menu Toggle — OUTSIDE header to avoid stacking context ═══ */}
+      <button
+        onClick={() => setMenuOpen(!menuOpen)}
+        className={`md:hidden fixed top-5 right-4 w-12 h-12 flex items-center justify-center z-[100] transition-colors duration-300 ${menuOpen ? 'text-white' : 'dark:text-gray-300 text-gray-700'}`}
+        aria-label="Toggle menu"
+      >
+        <div className="w-7 h-[22px] relative flex flex-col justify-between">
+          <span className={`block w-full h-[3px] bg-current rounded-full transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] origin-center ${menuOpen ? 'rotate-45 translate-y-[9.5px]' : ''}`} />
+          <span className={`block w-full h-[3px] bg-current rounded-full transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${menuOpen ? 'opacity-0 scale-x-0' : ''}`} />
+          <span className={`block w-full h-[3px] bg-current rounded-full transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] origin-center ${menuOpen ? '-rotate-45 -translate-y-[9.5px]' : ''}`} />
+        </div>
+      </button>
+
+      {/* ═══ Fullscreen Mobile Menu ═══ */}
+      <div
+        className={`fixed inset-0 z-[60] md:hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+          menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+        }`}
+      >
+        {/* Background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/images/menu.jpg')" }}
+        />
+        {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-surface-950/80" />
+
+        {/* Content — centered (top padding accounts for burger button) */}
+        <div className="relative z-10 flex flex-col items-center justify-center h-full w-full px-6 pt-20">
+          <nav className="flex flex-col items-center gap-6">
+            {navLinks.map((link, i) => {
+              const animClass = menuOpen
+                ? 'opacity-100 translate-y-0 blur-0'
+                : 'opacity-0 translate-y-4 blur-sm';
+              return link.external ? (
+                <a
+                  key={link.to}
+                  href={link.to}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`text-2xl sm:text-3xl font-heading font-semibold dark:text-white text-white hover:text-primary-500 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${animClass}`}
+                  style={{ transitionDelay: menuOpen ? `${i * 80 + 100}ms` : '0ms' }}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <a
+                  key={link.to}
+                  href={link.to === '/' ? undefined : (link.to.startsWith('/#') ? link.to : undefined)}
+                  onClick={(e) => {
+                    if (link.to === '/') {
+                      e.preventDefault();
+                      setMenuOpen(false);
+                      if (location.pathname === '/') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      } else {
+                        window.location.hash = '#/';
+                      }
+                    } else {
+                      handleAnchorClick(e as any, link.to);
+                    }
+                  }}
+                  className={`text-2xl sm:text-3xl font-heading font-semibold dark:text-white text-white hover:text-primary-500 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] cursor-pointer ${animClass}`}
+                  style={{ transitionDelay: menuOpen ? `${i * 80 + 100}ms` : '0ms' }}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
+          </nav>
+
+          {/* Phone CTA */}
+          <a
+            href="tel:+790****1193"
+            className={`mt-12 flex items-center gap-3 px-8 py-4 rounded-2xl bg-primary-500/20 text-primary-400 text-lg font-semibold transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+              menuOpen ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-4 blur-sm'
+            }`}
+            style={{ transitionDelay: menuOpen ? `${navLinks.length * 80 + 180}ms` : '0ms' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            +7 909 431 11 93
+          </a>
+        </div>
+      </div>
+
       {/* ══════ MAIN CONTENT ══════ */}
-      <main className="flex-1 pt-16 md:pt-20">
+      <main className="flex-1 pt-16 md:pt-20 relative z-10">
         {children}
       </main>
 
       {/* ══════ FOOTER ══════ */}
-      <footer className="dark:bg-surface-900/50 bg-gray-50 border-t dark:border-white/5 border-gray-200/50">
+      <footer className="relative z-10 glass-strong border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
             {/* Brand */}
@@ -227,15 +278,28 @@ export default function Layout({ children, theme, toggleTheme }: LayoutProps) {
             <div>
               <h4 className="font-semibold dark:text-white text-gray-900 mb-4">Навигация</h4>
               <nav className="space-y-2">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    className="block text-sm dark:text-gray-400 text-gray-600 hover:text-primary-500 transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+                {navLinks.map((link) =>
+                  link.external ? (
+                    <a
+                      key={link.to}
+                      href={link.to}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-sm dark:text-gray-400 text-gray-600 hover:text-primary-500 transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <a
+                      key={link.to}
+                      href={link.to.startsWith('/#') ? link.to : undefined}
+                      onClick={(e) => handleAnchorClick(e as any, link.to)}
+                      className="block text-sm dark:text-gray-400 text-gray-600 hover:text-primary-500 transition-colors cursor-pointer"
+                    >
+                      {link.label}
+                    </a>
+                  )
+                )}
               </nav>
             </div>
 
