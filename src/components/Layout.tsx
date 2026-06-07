@@ -154,6 +154,20 @@ export default function Layout({ children }: LayoutProps) {
 
         {/* Content — centered (top padding accounts for burger button) */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full w-full px-6 pt-20">
+          {/* Animated Logo */}
+          <div
+            className={`mb-10 transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+              menuOpen ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 -translate-y-4 blur-sm'
+            }`}
+          >
+            <div className="font-heading font-bold text-3xl text-white leading-tight text-center">
+              Авто<span className="text-primary-500">Эксперт</span>
+            </div>
+            <div className="text-xs text-gray-400 mt-1 tracking-widest uppercase text-center animate-pulse">
+              ТЕХОСМОТР · СТРАХОВАНИЕ
+            </div>
+          </div>
+
           <nav className="flex flex-col items-center gap-6">
             {navLinks.map((link, i) => {
               const animClass = menuOpen
