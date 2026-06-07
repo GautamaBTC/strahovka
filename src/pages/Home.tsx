@@ -559,7 +559,7 @@ function TeamCard({ member }: { member: typeof teamMembers[0] }) {
             alt={member.name}
             width="400"
             height="533"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 will-change-transform"
+            className="w-full h-full object-cover transition-transform duration-500 will-change-transform"
             loading="lazy"
             decoding="async"
             onError={() => setImgError(true)}
