@@ -140,7 +140,7 @@ export default function Layout({ children }: LayoutProps) {
 
       {/* ═══ Fullscreen Mobile Menu ═══ */}
       <div
-        className={`fixed inset-0 z-[60] md:hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+        className={`fixed inset-0 z-[60] md:hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
           menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         }`}
       >
@@ -149,8 +149,8 @@ export default function Layout({ children }: LayoutProps) {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/menu.jpg)` }}
         />
-        {/* Dark overlay for readability */}
-        <div className="absolute inset-0 bg-surface-950/80" />
+        {/* Dark overlay for readability — lighter */}
+        <div className="absolute inset-0 bg-surface-950/50" />
 
         {/* Content — centered (top padding accounts for burger button) */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full w-full px-6 pt-20">
@@ -165,8 +165,8 @@ export default function Layout({ children }: LayoutProps) {
                   href={link.to}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`text-2xl sm:text-3xl font-heading font-semibold dark:text-white text-white hover:text-primary-500 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${animClass}`}
-                  style={{ transitionDelay: menuOpen ? `${i * 80 + 100}ms` : '0ms' }}
+                  className={`text-2xl sm:text-3xl font-heading font-semibold dark:text-white text-white hover:text-primary-500 transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${animClass}`}
+                  style={{ transitionDelay: menuOpen ? `${i * 40 + 50}ms` : '0ms' }}
                 >
                   {link.label}
                 </a>

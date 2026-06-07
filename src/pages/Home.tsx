@@ -754,13 +754,13 @@ export default function Home() {
     <div ref={containerRef}>
       {/* ═══════ HERO SECTION ═══════ */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image — absolute within section, scrolls normally */}
+        {/* Background Image — fixed parallax, static position */}
         <div 
-          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+          className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat will-change-transform"
           style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/background.jpg)` }}
         />
-        {/* Dark Overlay for readability */}
-        <div className="absolute inset-0 z-0 bg-surface-950/65 pointer-events-none" />
+        {/* Dark Overlay — lighter for better visibility */}
+        <div className="fixed inset-0 z-0 bg-surface-950/40 pointer-events-none" />
         
         {/* Subtle Aurora accents on top */}
         <div className="aurora-blob w-[500px] h-[500px] bg-primary-500/20 top-[-100px] left-[-100px] animate-aurora-1 mix-blend-overlay" />
