@@ -557,8 +557,11 @@ function TeamCard({ member }: { member: typeof teamMembers[0] }) {
           <img
             src={member.photo}
             alt={member.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            width="400"
+            height="533"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 will-change-transform"
             loading="lazy"
+            decoding="async"
             onError={() => setImgError(true)}
           />
         )}
