@@ -128,7 +128,7 @@ export default function Layout({ children }: LayoutProps) {
       {/* ═══ Mobile Menu Toggle — OUTSIDE header to avoid stacking context ═══ */}
       <button
         onClick={() => setMenuOpen(!menuOpen)}
-        className={`md:hidden fixed top-5 right-4 w-12 h-12 flex items-center justify-center z-[100] transition-colors duration-300 ${menuOpen ? 'text-white' : 'dark:text-gray-300 text-gray-700'}`}
+        className={`md:hidden fixed top-2 right-4 w-12 h-12 flex items-center justify-center z-[100] transition-colors duration-300 ${menuOpen ? 'text-white' : 'dark:text-gray-300 text-gray-700'}`}
         aria-label="Toggle menu"
       >
         <div className="w-7 h-[22px] relative flex flex-col justify-between">
@@ -147,7 +147,7 @@ export default function Layout({ children }: LayoutProps) {
         {/* Background image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/images/menu.jpg')" }}
+          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/menu.jpg)` }}
         />
         {/* Dark overlay for readability */}
         <div className="absolute inset-0 bg-surface-950/80" />

@@ -753,7 +753,7 @@ export default function Home() {
         {/* Background Image — fixed, не скроллится */}
         <div 
           className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/images/background.jpg')" }}
+          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/background.jpg)` }}
         />
         {/* Dark Overlay for readability — fixed, бесшовное затемнение на весь сайт */}
         <div className="fixed inset-0 z-0 bg-surface-950/65 pointer-events-none" />
