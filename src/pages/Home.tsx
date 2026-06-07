@@ -753,14 +753,8 @@ export default function Home() {
   return (
     <div ref={containerRef}>
       {/* ═══════ HERO SECTION ═══════ */}
-      <section className="relative min-h-[100dvh] min-h-screen flex items-center justify-center overflow-hidden bg-surface-950">
-        {/* Background Image — fixed, covers full viewport + safe area */}
-        <div 
-          className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat will-change-transform"
-          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/background.jpg)`, minHeight: '100dvh' }}
-        />
-        {/* Dark Overlay */}
-        <div className="fixed inset-0 z-0 bg-surface-950/40 pointer-events-none" style={{ minHeight: '100dvh' }} />
+      <section className="relative min-h-[100dvh] min-h-screen flex items-center justify-center overflow-hidden bg-transparent">
+        {/* BG is now global .site-backdrop in Layout — no per-section fixed bg */}
         
         {/* Subtle Aurora accents on top */}
         <div className="aurora-blob w-[500px] h-[500px] bg-primary-500/20 top-[-100px] left-[-100px] animate-aurora-1 mix-blend-overlay" />

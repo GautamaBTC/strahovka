@@ -116,6 +116,44 @@ body {
   overscroll-behavior-y: none;
 }
 
+/* ═════ GLOBAL FIXED BACKDROP — immune to viewport resize/reflow ═════ */
+.site-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  contain: layout paint style;
+  background: #030610;
+}
+
+.site-backdrop__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.site-backdrop__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(3, 6, 16, 0.4);
+}
+
 /* ═════ БЛОКИРОВКА ПРОКРУТКИ ПРИ ОТКРЫТОЙ МОДАЛКЕ ═════ */
 body.modal-open {
   overflow: hidden !important;

@@ -66,6 +66,15 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-[100dvh] min-h-screen flex flex-col">
+      {/* ═══ Global Fixed Backdrop — immune to viewport resize ═══ */}
+      <div className="site-backdrop" aria-hidden>
+        <div
+          className="site-backdrop__image"
+          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/background.jpg)` }}
+        />
+        <div className="site-backdrop__overlay" />
+      </div>
+
       {/* ═════ HEADER ══════ */}
       <header className="fixed top-0 left-0 right-0 z-40 glass-strong border-b dark:border-white/5 border-gray-200/50 !bg-white/85 dark:!bg-slate-900/85 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
