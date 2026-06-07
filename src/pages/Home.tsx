@@ -753,7 +753,7 @@ export default function Home() {
   return (
     <div ref={containerRef}>
       {/* ═══════ HERO SECTION ═══════ */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-surface-950">
         {/* Background Image — fixed parallax, static position */}
         <div 
           className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat will-change-transform"

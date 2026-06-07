@@ -102,12 +102,15 @@
 /* ═════ BASE STYLES ═════ */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #030610;
+  min-height: 100vh;
 }
 
 /* ═════ БЛОКИРОВКА ПРОКРУТКИ ПРИ ОТКРЫТОЙ МОДАЛКЕ ═════ */
