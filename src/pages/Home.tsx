@@ -989,7 +989,7 @@ export default function Home() {
             ].map((item, i) => (
               <div key={i} className={`reveal reveal-delay-${i + 1} relative`}>
                 <div className="glass rounded-2xl p-6 text-center h-full card-hover">
-                  <div className="font-heading font-extrabold text-5xl text-primary-500/15 mb-3">{item.step}</div>
+                  <div className="font-heading font-extrabold text-5xl text-accent-400 drop-shadow-[0_0_12px_rgba(52,211,153,0.7)] mb-3">{item.step}</div>
                   <h3 className="font-heading font-semibold text-lg dark:text-white text-gray-900 mb-2">{item.title}</h3>
                   <p className="text-sm dark:text-gray-400 text-gray-600">{item.desc}</p>
                 </div>
