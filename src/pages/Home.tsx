@@ -815,7 +815,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ STATS SECTION ═══════ */}
-      <section className="relative py-16 md:py-20 overflow-hidden dark:bg-surface-950/80 bg-white/80">
+      <section className="relative py-16 md:py-20 overflow-hidden dark:bg-surface-950 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {[
@@ -841,7 +841,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ ADVANTAGES SECTION ═══════ */}
-      <section id="advantages" className="py-20 md:py-28 dark:bg-surface-950/80 bg-white/80">
+      <section id="advantages" className="py-20 md:py-28 dark:bg-surface-950 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="reveal fluid-h2 font-heading font-bold dark:text-white text-gray-900 mb-4">
@@ -877,7 +877,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ SERVICES SECTION ═══════ */}
-      <section id="services" className="py-20 md:py-28 dark:bg-surface-900/50 bg-gray-50/50">
+      <section id="services" className="py-20 md:py-28 dark:bg-surface-950 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="reveal fluid-h2 font-heading font-bold dark:text-white text-gray-900 mb-4">
@@ -950,7 +950,7 @@ export default function Home() {
 
 
       {/* ═══════ TEAM SECTION ═══════ */}
-      <section id="team" className="py-20 md:py-28 dark:bg-surface-900/50 bg-gray-50/50">
+      <section id="team" className="py-20 md:py-28 dark:bg-surface-950 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="reveal fluid-h2 font-heading font-bold dark:text-white text-gray-900 mb-4">
@@ -972,7 +972,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ HOW IT WORKS ═══════ */}
-      <section className="py-20 md:py-28 dark:bg-surface-950/80 bg-white/80">
+      <section className="py-20 md:py-28 dark:bg-surface-950 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="reveal fluid-h2 font-heading font-bold dark:text-white text-gray-900 mb-4">
@@ -1005,7 +1005,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ AMENITIES SECTION ═══════ */}
-      <section className="py-20 md:py-28 dark:bg-surface-900/50 bg-gray-50/50">
+      <section className="py-20 md:py-28 dark:bg-surface-950 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="reveal fluid-h2 font-heading font-bold dark:text-white text-gray-900 mb-4">
@@ -1033,7 +1033,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ CONTACTS SECTION ═══════ */}
-      <section id="contacts" className="py-20 md:py-28 dark:bg-surface-950/80 bg-white/80">
+      <section id="contacts" className="py-20 md:py-28 dark:bg-surface-950 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="reveal fluid-h2 font-heading font-bold dark:text-white text-gray-900 mb-4">
@@ -1135,7 +1135,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ CONTACT FORM SECTION ═══════ */}
-      <section id="contact-form" className="py-20 md:py-28 dark:bg-surface-900/50 bg-gray-50/50">
+      <section id="contact-form" className="py-20 md:py-28 dark:bg-surface-950 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="reveal fluid-h2 font-heading font-bold dark:text-white text-gray-900 mb-4">
