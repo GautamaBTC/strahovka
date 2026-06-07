@@ -776,7 +776,7 @@ export default function Home() {
 
             <h1 className="reveal reveal-delay-1 fluid-h1 font-heading font-extrabold dark:text-white text-gray-900 mb-6">
               Техосмотр в Шахтах{' '}
-              <span className="text-gradient">за 30 минут</span>{' '}
+              <span className="text-white drop-shadow-[0_2px_8px_rgba(79,110,247,0.6)]">за 30 минут</span>{' '}
               официально
             </h1>
 
