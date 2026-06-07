@@ -1052,7 +1052,7 @@ export default function Home() {
                     <h3 className="font-semibold dark:text-white text-gray-900 mb-1">Адрес</h3>
                     <p className="dark:text-gray-400 text-gray-600">346500, Ростовская область, г. Шахты, переулок Мечникова, 1А</p>
                     <a
-                      href="https://yandex.ru/maps/-/CDaZiE~P"
+                      href="https://yandex.ru/maps/?ll=40.231948%2C47.687890&z=17&pt=40.231948,47.687890&text=%D0%A8%D0%B0%D1%85%D1%82%D1%8B+%D0%BF%D0%B5%D1%80%D0%B5%D1%83%D0%BB%D0%BE%D0%BA+%D0%9C%D0%B5%D1%87%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D0%B0+1%D0%90"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-sm text-primary-500 hover:text-primary-400 transition-colors mt-2"
