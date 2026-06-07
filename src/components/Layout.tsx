@@ -84,11 +84,14 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-[100dvh] min-h-screen flex flex-col">
-      {/* ═══ Global Fixed Backdrop — immune to viewport resize ═══ */}
+      {/* ═══ Global Fixed Backdrop — <img> based, no bg-attachment bugs ═══ */}
       <div className="site-backdrop" aria-hidden>
-        <div
+        <img
           className="site-backdrop__image"
-          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/background.jpg)` }}
+          src={`${import.meta.env.BASE_URL}images/background.jpg`}
+          alt=""
+          loading="eager"
+          decoding="async"
         />
         <div className="site-backdrop__overlay" />
       </div>
