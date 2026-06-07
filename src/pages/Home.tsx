@@ -50,12 +50,7 @@ function Modal({ isOpen, onClose, title, description, price, features, documents
           <h3 className="font-heading font-bold text-2xl dark:text-white text-gray-900 mb-3">{title}</h3>
           <p className="dark:text-gray-300 text-gray-700 mb-6 leading-relaxed">{description}</p>
 
-          {price && (
-            <div className="mb-6">
-              <p className="text-sm dark:text-gray-500 text-gray-500 mb-1">Стоимость:</p>
-              <p className="text-2xl font-bold text-gradient">{price}</p>
-            </div>
-          )}
+
 
           {features && features.length > 0 && (
             <div className="mb-6">
@@ -110,7 +105,6 @@ function Modal({ isOpen, onClose, title, description, price, features, documents
 const serviceDetails: Record<string, { description: string; price?: string; features?: string[]; documents?: string[] }> = {
   'tech-inspection': {
     description: 'Проводим технический осмотр всех категорий транспортных средств с внесением в единую автоматизированную информационную систему технического осмотра (ЕАИСТО). Выдаем диагностическую карту установленного образца.',
-    price: 'от 1 700 ₽ (по предварительной записи)',
     features: [
       'Внешний осмотр транспортного средства',
       'Проверка работы тормозной системы',
@@ -128,7 +122,6 @@ const serviceDetails: Record<string, { description: string; price?: string; feat
   },
   'insurance': {
     description: 'Оформляем полисы ОСАГО и КАСКО от ведущих страховых компаний России. Помощь в выборе оптимальной программы страхования.',
-    price: 'ОСАГО от 5 000 ₽, КАСКО — индивидуально',
     features: [
       'Оформление ОСАГО за 15 минут',
       'Скидки за безаварийную езду (КБМ)',
@@ -146,7 +139,6 @@ const serviceDetails: Record<string, { description: string; price?: string; feat
   },
   'license-replacement': {
     description: 'Помогаем заменить водительское удостоверение в связи с окончанием срока действия, утратой, изменением персональных данных.',
-    price: 'от 2 000 ₽ (без учета госпошлины)',
     features: [
       'Помощь в подготовке документов',
       'Запись в ГИБДД',
@@ -162,7 +154,6 @@ const serviceDetails: Record<string, { description: string; price?: string; feat
   },
   'registration': {
     description: 'Помощь в постановке автомобилей на учет в ГИБДД. Снятие с учета, внесение изменений в регистрационные данные.',
-    price: 'от 3 000 ₽ (без учета госпошлин)',
     features: [
       'Подготовка полного пакета документов',
       'Запись в ГИБДД на удобное время',
@@ -180,7 +171,6 @@ const serviceDetails: Record<string, { description: string; price?: string; feat
   },
   'medical': {
     description: 'Оформление медицинских справок для водителей всех категорий (форма 003-В/у). Прохождение медкомиссии за 30 минут.',
-    price: 'от 1 500 ₽',
     features: [
       'Все врачи в одном месте',
       'Без очередей',
@@ -196,7 +186,6 @@ const serviceDetails: Record<string, { description: string; price?: string; feat
   },
   'life-insurance': {
     description: 'Страхование жизни и здоровья, ипотечное страхование. Индивидуальные программы под ваши потребности.',
-    price: 'индивидуальный расчет',
     features: [
       'Страхование от несчастных случаев',
       'Ипотечное страхование',
@@ -211,7 +200,6 @@ const serviceDetails: Record<string, { description: string; price?: string; feat
   },
   'property-insurance': {
     description: 'Страхование домов, квартир, дач и другого имущества от пожара, затопления, кражи и других рисков.',
-    price: 'от 3 000 ₽ в год',
     features: [
       'Страхование от огня и воды',
       'Защита от кражи со взломом',
@@ -226,7 +214,6 @@ const serviceDetails: Record<string, { description: string; price?: string; feat
   },
   'training': {
     description: 'Обучение вождению на все категории прав (A, B, C, D) и спецтехнику. Теоретические и практические занятия.',
-    price: 'от 25 000 ₽ (категория B)',
     features: [
       'Лицензированная автошкола',
       'Опытные инструкторы',
@@ -244,7 +231,6 @@ const serviceDetails: Record<string, { description: string; price?: string; feat
   },
   'contracts': {
     description: 'Составление и оформление договоров купли-продажи автомобилей. Юридическая проверка чистоты сделки.',
-    price: 'от 1 500 ₽',
     features: [
       'Проверка автомобиля по базам',
       'Проверка на ограничения и залоги',
@@ -260,7 +246,6 @@ const serviceDetails: Record<string, { description: string; price?: string; feat
   },
   'leasing': {
     description: 'Оформление автомобилей в лизинг для физических и юридических лиц. Выгодные условия от партнеров.',
-    price: 'индивидуальный расчет',
     features: [
       'Первоначальный взнос от 0%',
       'Срок лизинга до 5 лет',
@@ -497,8 +482,8 @@ const services = [
 /* ─── Team data ─── */
 const teamMembers = [
   {
-    name: 'Свиридова Оксана Валерьевна',
-    role: 'Владелец, эксперт по техосмотру',
+    name: 'Оксана Валерьевна Свиридова',
+    role: 'Оператор сервисного центра',
     phone: '+7 909 431 11 93',
     phoneLink: '+79094311193',
     photo: `${import.meta.env.BASE_URL}images/image.jpg`,
@@ -506,7 +491,7 @@ const teamMembers = [
   },
   {
     name: 'Лавренко Данил Михайлович',
-    role: 'Оператор техосмотра',
+    role: 'Технический эксперт',
     phone: '+7 960-455-60-22',
     phoneLink: '+79604556022',
     photo: `${import.meta.env.BASE_URL}images/image1.jpg`,
@@ -514,7 +499,7 @@ const teamMembers = [
   },
   {
     name: 'Ткаченко Дмитрий Юрьевич',
-    role: 'Оператор техосмотра',
+    role: 'Технический эксперт',
     phone: '+7 989-522-45-26',
     phoneLink: '+79895224526',
     photo: `${import.meta.env.BASE_URL}images/image2.jpg`,
@@ -780,7 +765,7 @@ export default function Home() {
 
             <h1 className="reveal reveal-delay-1 fluid-h1 font-heading font-extrabold dark:text-white text-gray-900 mb-6">
               Техосмотр в Шахтах{' '}
-              <span className="text-gradient">за 20 минут</span>{' '}
+              <span className="text-gradient">за 30 минут</span>{' '}
               официально
             </h1>
 
@@ -920,9 +905,6 @@ export default function Home() {
                         <h3 className="font-heading font-bold text-2xl dark:text-white text-gray-900 mb-2">{service.name}</h3>
                         <p className="dark:text-gray-400 text-gray-600 mb-4 leading-relaxed">{service.desc}</p>
                         <div className="flex flex-wrap items-center gap-3">
-                          <span className="px-4 py-2 rounded-xl bg-accent-500/10 text-accent-500 font-bold text-lg">
-                            от 1 700 ₽
-                          </span>
                           {/* 🔧 ИСПРАВЛЕНО: type="button", relative z-20, cursor-pointer */}
                           <button
                             type="button"
@@ -960,79 +942,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════ PRICING SECTION ═══════ */}
-      <section id="pricing" className="py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <h2 className="reveal fluid-h2 font-heading font-bold dark:text-white text-gray-900 mb-4">
-              Стоимость <span className="text-gradient">услуг</span>
-            </h2>
-          </div>
 
-          <div className="reveal max-w-2xl mx-auto mb-12">
-            {/* 🔧 ИСПРАВЛЕНО: убран overflow-hidden */}
-            <div className="relative glass-strong rounded-3xl p-8 md:p-10 gradient-border text-center animate-pulse-glow">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-warn-500 text-white text-xs font-bold rounded-full uppercase tracking-wider z-10">
-                Специальная цена
-              </div>
-              <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-primary-500/15 flex items-center justify-center text-primary-500">
-                <CarFrontIcon />
-              </div>
-              <h3 className="font-heading font-bold text-2xl dark:text-white text-gray-900 mb-2">
-                Технический осмотр
-              </h3>
-              <p className="dark:text-gray-400 text-gray-600 mb-6">Полный осмотр транспортного средства с выдачей диагностической карты</p>
-              <div className="mb-6">
-                <span className="font-heading font-extrabold text-5xl md:text-6xl text-gradient">1 700 ₽</span>
-                <p className="text-sm dark:text-gray-500 text-gray-400 mt-2">по предварительной записи</p>
-              </div>
-              <ul className="text-left max-w-sm mx-auto space-y-2 mb-8">
-                {[
-                  'Внесение в ЕАИСТО',
-                  'Диагностическая карта',
-                  'Подлинность гарантирована',
-                  'Оплата: наличные, карта, перевод',
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-sm dark:text-gray-300 text-gray-700">
-                    <span className="text-accent-500 shrink-0"><CheckCircleIcon /></span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              {/* 🔧 ИСПРАВЛЕНО: type="button", relative z-20, cursor-pointer */}
-              <button
-                type="button"
-                onClick={() => openServiceModal('tech-inspection')}
-                className="relative z-20 cursor-pointer w-full sm:w-auto px-10 py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-2xl font-bold text-lg transition-all hover:scale-105 shadow-xl shadow-primary-500/25 pointer-events-auto"
-              >
-                Подробнее об услуге
-              </button>
-            </div>
-          </div>
-
-          <div className="reveal text-center">
-            <p className="dark:text-gray-400 text-gray-600 mb-4">
-              Стоимость других услуг уточняйте по телефону или в WhatsApp
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <a
-                href="tel:+79094311193"
-                className="px-6 py-3 rounded-xl border dark:border-white/10 border-gray-200 dark:text-white text-gray-900 font-medium hover:bg-primary-500/10 hover:text-primary-500 hover:border-primary-500/30 transition-all"
-              >
-                Позвонить
-              </a>
-              <a
-                href="https://wa.me/79094311193"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 rounded-xl bg-[#25D366]/10 text-[#25D366] font-medium hover:bg-[#25D366]/20 transition-all"
-              >
-                Написать в WhatsApp
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ═══════ TEAM SECTION ═══════ */}
       <section id="team" className="py-20 md:py-28 dark:bg-surface-900/50 bg-gray-50/50">
